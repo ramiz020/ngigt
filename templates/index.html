@@ -16,7 +16,109 @@
 
     <!--<title>Dashboard Sidebar Menu</title>--> 
 </head>
-<body>
+{% if x == 'home'%}
+<div id="container" class="container">
+    <div id="container2" class="container2">
+{%endif%}    
+    <style>
+    :root {
+    --primary-color: #4EA685;
+    --secondary-color: #57B894;
+    --black: #000000;
+    --white: #ffffff;
+    --gray: #efefef;
+    --gray-2: #757575;
+
+    --facebook-color: #4267B2;
+    --google-color: #DB4437;
+    --twitter-color: #1DA1F2;
+    --insta-color: #E1306C;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100vh;
+
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+overflow: hidden;
+
+}
+
+.container2 {
+    position: relative;
+    min-height: 100vh;
+
+
+}
+
+/* BACKGROUND */
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0%;
+    height: 100vh;
+    width: 300vw;
+    transform: translate(35%, 0);
+    background-image: linear-gradient(-45deg, #695CFE 0%, #695CFE 100%);
+    transition: 1s ease-in-out;
+    z-index: 100;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-bottom-right-radius: max(50vw, 50vh);
+    border-top-left-radius: max(50vw, 50vh);
+}
+.container2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 300vw;
+    transform: translate(35%, 0);
+    background-image: linear-gradient(-45deg, #695CFE 0%, #695CFE 100%);
+    transition: 1s ease-in-out;
+    z-index: 1001;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-bottom-right-radius: max(50vw, 50vh);
+    border-top-left-radius: max(50vw, 50vh);
+}
+
+.container.sign-in::before {
+    transform: translate(100%, 0);
+    right: 0%;
+}
+.container2.sign-in::before {
+    transform: translate(0, 0);
+    right: 100%;
+}</style>
+<script>let container = document.getElementById('container')
+        let container2 = document.getElementById('container2')
+
+    design = () => {
+        container.classList.design('sign-in')
+        container2.classList.design('sign-in')
+    }
+    
+    setTimeout(() => {
+        container.classList.add('sign-in')
+        container2.classList.add('sign-in')
+    }, 200)</script>
+    <body>
+    
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -146,7 +248,7 @@
             </button></div>
         <br>{%endif%}
         {% if x == 'home' %}
-        <p style="font-size:20px;margin-left: 240px;max-width:900px;text-align: center;border: 1px solid;border-radius: 10px;">Welcome our <b> NGIGT - New Generation Informatin Gathering Tool. </b> You can use our tools for completely free. To do this, select the tool you want using the sidebar on the left.</p>
+        <p style="font-size:20px;margin-left: 240px;max-width:900px;text-align: center;border: 1px solid;border-radius: 10px;">Welcome our <b> NGIGT - New Generation Information Gathering Tool. </b> You can use our tools for completely free. To do this, select the tool you want using the sidebar on the left.</p>
         <br><br><h2 style="margin-left: 40px;color: #695CFE;">What is Information Gathering?</h2>
         <p style="font-size:20px;margin-left: 50px;">Information Gathering means gathering different kinds of information about the target. It is basically, the first step or the beginning stage of Ethical Hacking, where the penetration testers or hackers (both black hat or white hat) tries to gather all the information about the target, in order to use it for Hacking.</p>
         <br><br><h2 style="margin-left: 40px;color: #695CFE;">What is the purpose of information gathering?</h2>
@@ -558,5 +660,5 @@ toggle.addEventListener("click" , () =>{
 })
     </script>
 
-</body>
+</body></div></div>
 </html>

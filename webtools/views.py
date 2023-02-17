@@ -16,6 +16,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from django.http import FileResponse
+import time
 
 
 def index(request):
@@ -24,16 +25,36 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
+        if 'login' in request.POST:
+            login.username = request.POST['username']
+            login.password = request.POST['password']
 
-            user = auth.authenticate(username=username,password=password)
+            user = auth.authenticate(username=login.username,password=login.password)
             if user is not None:
                 auth.login(request, user)
+                time.sleep(5)
                 return redirect('index')
             else:
                 messages.info(request, 'Username or Password is incorrect')    
                 return redirect('login')
+        if 'register' in request.POST:
+            email = request.POST['email']
+            password2 = request.POST['password2']
+            reg_password = request.POST['regpassword']
+            reg_username = request.POST['regusername']
+            if reg_password == password2:
+                if User.objects.filter(username=reg_username).exists():
+                    messages.info(request, 'Registration is failed. Usarname already in use')
+                    return redirect('login')
+                elif User.objects.filter(email=email).exists():
+                    messages.info(request, 'Registration is failed. Email already in use')
+                    return redirect('login')
+            else:
+                messages.info(request, 'Registration is failed. Passwords must be same') 
+                return redirect('login')
+            user = User.objects.create_user(username=reg_username,email=email,password=reg_password)    
+            user.save()        
+            return redirect('login')
     return render(request, 'login.html')
 
 
@@ -92,6 +113,7 @@ def subdomain_finder(request):
                 socket.gethostbyname(subdomain)
                 subdomains.append(subdomain)
                 data += "[+] Discovered subdomain: " +  subdomain + '\n'
+                print(data)
             except:
                 pass
         if not subdomains:
@@ -188,7 +210,7 @@ def netcraft(request):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         netcraft.domain = request.POST['search']
-        driver = webdriver.Chrome(options=chrome_options)
+        driver = webdriver.Chrome()
         driver.get("https://sitereport.netcraft.com/?url=" + netcraft.domain)
 
 
@@ -228,3 +250,11 @@ def about_creators(request):
 
 def download(request):
     return FileResponse(open('media/ngigt.exe','rb'))
+
+
+def custom_page_not_found_view(request, exception):
+    return render(request, "404.html", {})
+
+
+def custom_500_error(request):
+    return render(request, "500.html", {})

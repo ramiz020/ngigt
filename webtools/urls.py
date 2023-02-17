@@ -7,7 +7,6 @@ from . import views
 urlpatterns =  [
     path('', views.index,name='index'),
     path('login',views.login,name='login'),
-    path('register',views.register,name='register'),
     path('logout',views.logout,name='logout'),
     path('subdomain_finder',views.subdomain_finder,name='subdomain_finder'),
     path('dns_search',views.dns_search,name='dns_search'),
@@ -17,3 +16,7 @@ urlpatterns =  [
     path('download',views.download,name='download'),
 
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
+
+
+handler404 = 'webtools.views.custom_page_not_found_view'
+handler500 = 'webtools.views.custom_500_error'
